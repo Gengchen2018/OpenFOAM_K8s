@@ -1,0 +1,7 @@
+{
+  "registry-mirrors": [
+    "https://mirror.ccs.tencentyun.com",            
+    "https://hub-mirror.c.163.com"
+  ],
+  "insecure-registries": ["10.0.0.31:5000"]
+}

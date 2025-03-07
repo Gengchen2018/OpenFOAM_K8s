@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: foam1
+spec:
+  serviceName: "mpi-foam"
+  replicas: 10
+  selector:
+    matchLabels:
+      app: foam1
+  template:
+    metadata:
+      labels:
+        app: foam1
+    spec:
+      containers:
+      - name: foam-container
+        image: 10.0.0.31:5000/my-openfoam-image:v2
+        ports:
+          - containerPort: 22
+        command: ["/bin/bash", "-c", "mkdir -p /home/foam/OpenFOAM/foam-v2212/run; /usr/sbin/sshd; while true; do sleep 30; done;"]
+        volumeMounts:
+        - name: nfs-storage
+          mountPath: /home/foam/OpenFOAM/foam-v2212/run
+      nodeSelector:
+          node-type: node3
+      volumes:
+      - name: nfs-storage
+        persistentVolumeClaim:
+          claimName: nfs-pvc
+
