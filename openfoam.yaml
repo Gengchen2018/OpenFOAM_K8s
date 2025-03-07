@@ -4,7 +4,7 @@ metadata:
   name: foam1
 spec:
   serviceName: "mpi-foam"
-  replicas: 10
+  replicas: 8
   selector:
     matchLabels:
       app: foam1
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: foam-container
-        image: 10.0.0.31:5000/my-openfoam-image:v2
+        image: 10.0.0.31:5000/my-openfoam-image:v3
         ports:
           - containerPort: 22
         command: ["/bin/bash", "-c", "mkdir -p /home/foam/OpenFOAM/foam-v2212/run; /usr/sbin/sshd; while true; do sleep 30; done;"]
@@ -23,7 +23,7 @@ spec:
         - name: nfs-storage
           mountPath: /home/foam/OpenFOAM/foam-v2212/run
       nodeSelector:
-          node-type: node3
+          node-type: node1
       volumes:
       - name: nfs-storage
         persistentVolumeClaim:
